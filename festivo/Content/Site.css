@@ -1,0 +1,53 @@
+﻿/* Set padding to keep content from hitting the edges */
+body {
+    background: url('image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff; /* Optional: to make text white */
+}
+
+.navbar-logo {
+    height: 50px; /* Adjust as needed */
+    max-height: 100%; /* Prevents the logo from expanding beyond navbar size */
+    object-fit: contain; /* Ensures the image scales properly */
+}
+
+.navbar {
+    padding: 0.5rem 1rem; /* Retain default padding for a compact look */
+}
+
+.navbar-brand {
+    padding: 0; /* Remove additional padding around the logo */
+}
+
+
+/* Optionally, apply the background to the entire HTML element as well */
+html {
+    height: 100%;
+}
+
+/* Set the background to be fixed and cover the entire page */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}

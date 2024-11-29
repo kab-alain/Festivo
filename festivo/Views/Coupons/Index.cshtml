@@ -1,0 +1,57 @@
+﻿@model IEnumerable<festivo.Models.Coupon>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiscountPercentage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValidUntil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Event.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiscountPercentage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValidUntil)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Event.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CouponID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CouponID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CouponID })
+        </td>
+    </tr>
+}
+
+</table>

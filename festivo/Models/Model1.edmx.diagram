@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e714f634eb9f494abfdccc49074bc376" Name="Diagram1">
+        <EntityTypeShape EntityType="festivoModel.Coupon" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="festivoModel.Event" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="festivoModel.EventFeedback" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="festivoModel.EventType" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="festivoModel.Message" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="festivoModel.Ticket" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="festivoModel.User" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <AssociationConnector Association="festivoModel.FK_Coupons_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="festivoModel.FK_Event_EventType" ManuallyRouted="false" />
+        <AssociationConnector Association="festivoModel.FK_Event_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="festivoModel.FK_EventFeedback_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="festivoModel.FK_Tickets_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="festivoModel.FK_EventFeedback_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="festivoModel.FK_Messages_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="festivoModel.FK_Tickets_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

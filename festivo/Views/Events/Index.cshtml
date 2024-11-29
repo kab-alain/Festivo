@@ -1,0 +1,63 @@
+﻿@model IEnumerable<festivo.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Events</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { @class = "btn btn-primary" })
+</p>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <img src="@item.Image" alt="Event Image" class="card-img-top" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">@item.Description</p>
+                    <p><strong>Venue:</strong> @item.Venue</p>
+                    <p><strong>City:</strong> @item.City</p>
+                    <p><strong>Date:</strong> @item.Date</p>
+                    <p><strong>Start Time:</strong> @item.StartTime</p>
+                    <p><strong>Price:</strong> @item.Price</p>
+                    <div class="btn-group" role="group">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.EventID }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = item.EventID }, new { @class = "btn btn-info btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.EventID }, new { @class = "btn btn-danger btn-sm" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .btn-group {
+            margin-top: 10px;
+        }
+
+        .btn-sm {
+            margin-right: 5px;
+        }
+    </style>
+}

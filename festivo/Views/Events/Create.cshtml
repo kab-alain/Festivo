@@ -1,0 +1,158 @@
+﻿@model festivo.Models.Event
+
+@{
+    ViewBag.Title = "Listing";
+}
+
+<div style="background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px; margin: 50px auto; max-width: 800px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); color: #fff; font-family: 'Arial', sans-serif;">
+    <h2 style="text-align: center; font-size: 1.8em; margin-bottom: 20px; font-weight: bold;">Listing</h2>
+
+    @using (Html.BeginForm("Create", "Events", FormMethod.Post, new { enctype = "multipart/form-data", style = "display: flex; flex-wrap: wrap; gap: 20px;" }))
+    {
+        @Html.AntiForgeryToken()
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;">
+    <!-- Event Name -->
+    <div style="display: flex; flex-direction: column;">
+        @Html.LabelFor(model => model.Title, "Event name")
+        @Html.TextBoxFor(model => model.Title, new { @style = "border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px;" })
+        @Html.ValidationMessageFor(model => model.Title, "", new { @style = "color: #ff0000;" })
+    </div>
+
+    <!-- Event Type -->
+    <div style="display: flex; flex-direction: column;">
+        @Html.LabelFor(model => model.EventTypeID, "Event Type")
+        @Html.DropDownListFor(model => model.EventTypeID, (SelectList)ViewBag.EventTypes, new { @style = "border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px;" })
+        @Html.ValidationMessageFor(model => model.EventTypeID, "", new { @style = "color: #ff0000;" })
+    </div>
+
+    <!-- Date -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, "Date")
+        @Html.TextBoxFor(model => model.Date, new { @class = "form-control", @type = "date" })
+        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+    </div>
+
+
+    <!-- Time -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartTime, "Time")
+        @Html.TextBoxFor(model => model.StartTime, new { @class = "form-control", @type = "time" })
+        @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+    </div>
+
+
+    <!-- Organizer -->
+    <div style="display: flex; flex-direction: column;">
+        @Html.LabelFor(model => model.OrganizerID, "Organizer")
+        @Html.DropDownListFor(model => model.OrganizerID, (SelectList)ViewBag.Organizers, new { @style = "border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px;" })
+        @Html.ValidationMessageFor(model => model.OrganizerID, "", new { @style = "color: #ff0000;" })
+    </div>
+
+    <!-- Max Capacity -->
+    <div style="display: flex; flex-direction: column;">
+        @Html.LabelFor(model => model.MaxCapacity, "Maximum Seats")
+        @Html.TextBoxFor(model => model.MaxCapacity, new { @style = "border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px;" })
+        @Html.ValidationMessageFor(model => model.MaxCapacity, "", new { @style = "color: #ff0000;" })
+    </div>
+
+    <!-- Price -->
+    <div style="display: flex; flex-direction: column;">
+        @Html.LabelFor(model => model.Price, "Ticket Price")
+        @Html.TextBoxFor(model => model.Price, new { @style = "border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px;" })
+        @Html.ValidationMessageFor(model => model.Price, "", new { @style = "color: #ff0000;" })
+    </div>
+
+    <!-- Description -->
+    <div style="display: flex; flex-direction: column; grid-column: span 2;">
+        @Html.LabelFor(model => model.Description, "Description")
+        @Html.TextAreaFor(model => model.Description, new { @style = "border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px;" })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @style = "color: #ff0000;" })
+    </div>
+
+    <!-- Image Upload -->
+    <div style="display: flex; flex-direction: column; grid-column: span 2;">
+        @Html.LabelFor(model => model.Image, "Media")
+        <input type="file" name="ImageFile" style="border: 1px solid #ccc; border-radius: 5px; padding: 8px; font-size: 14px; background-color: #fff;" />
+        @Html.ValidationMessageFor(model => model.Image, "", new { @style = "color: #ff0000;" })
+    </div>
+</div>
+
+        <!-- Submit Button -->
+        <div style="text-align: center; margin-top: 20px; grid-column: span 2;">
+            <button type="submit" style="background-color: #6a1b9a; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                Add Event
+            </button>
+        </div>
+    }
+</div>
+
+
+@section Styles {
+    <style>
+        body {
+            background: url('/Content/noise.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+
+        .listing-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 50px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .form-listing {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-control,
+        .form-control-file {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .btn-add-event {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #800080;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-add-event:hover {
+                background-color: #5a005a;
+            }
+    </style>
+}
