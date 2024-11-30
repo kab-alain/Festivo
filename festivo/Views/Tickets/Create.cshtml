@@ -1,64 +1,195 @@
-﻿@model festivo.Models.Ticket
-
-@{
-    ViewBag.Title = "Create";
-}
-
-<h2>Create</h2>
+﻿<h2>RSVP</h2>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Ticket</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventID, "EventID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("EventID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EventID, "", new { @class = "text-danger" })
+<div class="event-details-container">
+    <link href="https://fonts.googleapis.com/css2?family=Judson:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy:wght@700&display=swap" rel="stylesheet">
+
+    @if (ViewBag.SelectedEvent != null)
+    {
+        var selectedEvent = ViewBag.SelectedEvent as festivo.Models.Event;
+        <div class="event-info">
+            <img src="@selectedEvent.Image" alt="@selectedEvent.Title" class="event-image" />
+            <h3>@selectedEvent.Title</h3>
+            <div class="description-container">
+                <p class="event-description">@selectedEvent.Description</p>
+            </div>
+            <p><strong>Date:  </strong> @selectedEvent.Date</p>
+            <p><strong>Time:  </strong> @selectedEvent.StartTime</p>
+            <p><strong>City:  </strong> @selectedEvent.City</p>
+            <p><strong>Venue:  </strong> @selectedEvent.Venue</p>
+            <p><strong>Price:  </strong> @selectedEvent.Price RWF</p>
+        </div>
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <!-- Hidden input to pass EventID -->
+            @Html.Hidden("EventID", (ViewBag.SelectedEvent as festivo.Models.Event)?.EventID)
+
+            <!-- Email -->
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="Email" class="form-control" placeholder="Enter your email" required />
+            </div>
+
+            <!-- Quantity -->
+            <div class="form-group">
+                <label for="Quantity">Number of tickets</label>
+                <input type="text" id="Quantity" name="Quantity" class="form-control" />
+                <span id="QuantityError"></span>
+            </div>
+
+            <!-- Booking Date -->
+            <div class="form-group">
+                <label>Booking Date</label>
+                <input type="date" name="BookingDate" class="form-control" required />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="button-container">
+                <input type="submit" value="Create ticket" class="btn btn-primary" />
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookingDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BookingDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    }
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section Styles {
+    <style>
+        body {
+            background: url('/Content/noise.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+        .event-details-container {
+            display: flex;
+            align-items: flex-start;
+            padding: 30px;
+            background-color: #000000d7;
+            color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgb(0, 0, 0, 0.30);
+            position: relative;
+        }
+
+        /* Left section: Event details */
+        .event-info {
+            flex: 1;
+            max-width: 50%;
+        }
+
+            .event-info img {
+                height: 350px;
+                max-width: 700px;
+                width: auto;
+                border-radius: 12px;
+            }
+
+            .event-info h3 {
+                margin-bottom: 15px;
+                font-family: 'Judson', serif; 
+                font-weight: bold; 
+                font-size: 36px;"
+            }
+
+            .event-info p {
+                font-family: 'Kantumruy', sans-serif;
+                font-weight: bold;
+                font-size: 18px;
+                margin-bottom: 10px;
+                color: #cccccc;
+                margin: 5px; /* Remove extra margin */
+                line-height: 1;
+            }
+        .description-container {
+            position: absolute; /* Position it absolutely relative to .event-details-container */
+            bottom: 30px; /* Adjust this to the desired position */
+            left: 330px; /* Adjust this to the desired position */
+            width: 80%; /* Optional: Set width */
+            color: #ffffff; /* Optional: Set text color */
+        }
+
+        .event-description {
+            font-family: 'Kantumruy', sans-serif;
+            font-weight: bold;
+            font-size: 25px;
+            margin-bottom: 10px;
+            color: #cccccc;
+            margin: 5px;
+            line-height: 1;
+        }
+
+
+        .form-horizontal {
+            margin-top: 100px;
+            margin-left: 140px;
+            margin-right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+            .form-horizontal h4 {
+                font-size: 1.5rem;
+                color: #ff00d4;
+                margin-bottom: 10px;
+            }
+
+        .form-group label {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #bbb;
+        }
+
+        .form-group .form-control {
+            width: 200%;
+            border: 1px solid #444;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #ffffff;
+            color: black;
+        }
+
+            .form-group .form-control:focus {
+                border-color: #a320ff;
+                outline: none;
+                box-shadow: 0 0 8px #a320ff;
+            }
+        .button-container {
+            position: absolute; /* Position it absolutely relative to .event-details-container */
+            bottom: 50px; /* Adjust this to the desired position */
+            left: 680px; /* Adjust this to the desired position */
+            width: 1000px; /* Optional: Set width */
+            color: #ffffff; /* Optional: Set text color */
+        }
+        input[type="submit"] {
+            background-color: #8C0B7F;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            padding: 10px 0;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.5s ease-in-out;
+            height: 40px;
+            width: 200%;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #391658;
+            }
+
+            input[type="submit"]:active {
+                background-color: #520c87;
+            }
+
+
+      
+    </style>
 }

@@ -15,6 +15,11 @@ namespace festivo.Controllers
         private festivoEntities1 db = new festivoEntities1();
 
         // GET: Events
+        public ActionResult Display()
+        {
+            var events = db.Events.Include(e => e.EventType).Include(e => e.User);
+            return View(events.ToList());
+        }
         public ActionResult Index()
         {
             var events = db.Events.Include(e => e.EventType).Include(e => e.User);

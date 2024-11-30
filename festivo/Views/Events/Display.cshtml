@@ -6,6 +6,13 @@
 
 <div class="container">
     <header class="header">
+        <div class="logo">
+            <h1>Festivo</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="#">Logout</a>
+            <a href="#">Contact</a>
+        </nav>
         <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Judson:wght@700&display=swap" rel="stylesheet">
     </header>
@@ -14,10 +21,6 @@
         <input type="text" placeholder="Search Location" class="search-input">
         <button class="search-btn">Find</button>
     </div>
-
-    <p>
-        @Html.ActionLink("List new event", "Create", null, new { @class = "cute-button" })
-    </p>
 
     <h2 class="section-title">Upcoming Events</h2>
 
@@ -36,9 +39,7 @@
                     <p class="event-info"><strong>Venue:</strong> @item.Venue</p>
                     <p class="event-info"><strong>Price:</strong> @item.Price</p>
                     <div class="btn-group" role="group">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.EventID }, new { @class = "btn btn-warning btn-sm" })
-                        @Html.ActionLink("Details", "Details", new { id = item.EventID }, new { @class = "btn btn-info btn-sm" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.EventID }, new { @class = "btn btn-danger btn-sm" })
+                        @Html.ActionLink("RSVP", "Create", "Tickets", new { eventId = item.EventID }, new { @class = "btn btn-warning btn-sm" })
                     </div>
                 </div>
             </div>
@@ -48,7 +49,7 @@
 
 @section Styles {
     <style>
-       
+
 
         /* General Styling */
         body {
@@ -85,6 +86,7 @@
         .search-bar {
             display: flex;
             margin: 20px 0;
+            border-radius: 5px;
         }
 
         .search-input {
@@ -103,44 +105,18 @@
             border-radius: 30px;
             margin-left: 10px;
         }
-        .cute-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-family: 'Kantumruy', sans-serif;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #8400ff; /* Cute pink color */
-            border: none;
-            border-radius: 30px;
-            text-decoration: none;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-            .cute-button:hover {
-                background-color: #af61f8; /* Lighter pink on hover */
-                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
-                transform: translateY(-3px);
-            }
-
-            .cute-button:active {
-                background-color: #ff4081; /* Slightly darker pink on click */
-                box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
-                transform: translateY(2px);
-            }
 
         .section-title {
             text-align: center;
             color: #b19cd9;
             font-size: 2rem;
-            margin-left:10px;
+            margin-left: 10px;
         }
 
         /* Event Cards Grid */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); 
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
 
@@ -152,7 +128,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-           
         }
 
         .image-container {
@@ -166,8 +141,8 @@
             width: 100%;
             height: 180px;
             object-fit: cover;
-            
         }
+
         .event-details h3 {
             font-family: 'Judson', serif; /* Apply Judson font */
             font-weight: bold; /* Make it bold */
@@ -180,21 +155,21 @@
             padding: 15px;
         }
 
-        .event-details h3 {
-            margin: 0 0 10px;
-            font-size: 1.5rem;
-            color: black;
-        }
+            .event-details h3 {
+                margin: 0 0 10px;
+                font-size: 1.5rem;
+                color: black;
+            }
 
-        .event-details .description {
-            font-size: 0.95rem;
-            color: #555;
-            margin: 10px 0;
-        }
+            .event-details .description {
+                font-size: 0.95rem;
+                color: #555;
+                margin: 10px 0;
+            }
 
-        .event-details p {
-            margin: 5px 0;
-        }
+            .event-details p {
+                margin: 5px 0;
+            }
 
         .event-info {
             font-family: 'Kantumruy Pro', sans-serif;
@@ -208,86 +183,43 @@
 
         .btn-group {
             margin-top: 10px;
+            margin-left: 80px;
         }
 
+        /* Small Button */
         .btn-sm {
+            width: 100%;
+            height: 40px;
             margin-right: 5px;
             padding: 8px 12px;
-            border-radius: 5px;
+            border-radius: 20px; /* Rounded corners */
             text-decoration: none;
             font-size: 0.85rem;
+            border: none; /* Remove default border */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+            transition: all 0.3s ease; /* Smooth transition effects */
         }
 
         /* Warning Button */
         .btn-warning {
-            background-color: #a77329;
+            background-color: #8a2be2;
             color: #fff;
-            padding: 10px 20px;
             border: none;
-            border-radius: 30px; /* Rounded corners */
-            text-decoration: none;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease; /* Smooth transitions */
+            text-align: center;
+            line-height: 24px;
+            transition: all 0.3s ease;
         }
 
             .btn-warning:hover {
-                background-color: #ec971f;
-                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+                background-color: #2d1138;
+                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.5); /* Enhance shadow on hover */
                 transform: translateY(-3px); /* Slight upward lift */
             }
 
             .btn-warning:active {
-                background-color: #d58512;
-                box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
-                transform: translateY(2px); /* Button press effect */
-            }
-
-        /* Info Button */
-        .btn-info {
-            background-color: #257a93;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 30px;
-            text-decoration: none;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-            .btn-info:hover {
-                background-color: #31b0d5;
-                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
-                transform: translateY(-3px);
-            }
-
-            .btn-info:active {
-                background-color: #269abc;
-                box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
-                transform: translateY(2px);
-            }
-
-        /* Danger Button */
-        .btn-danger {
-            background-color: #d9534f;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 30px;
-            text-decoration: none;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-            .btn-danger:hover {
-                background-color: #c9302c;
-                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
-                transform: translateY(-3px);
-            }
-
-            .btn-danger:active {
-                background-color: #ac2925;
-                box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
-                transform: translateY(2px);
+                background-color: #1f0b25;
+                box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.9); /* Shrink shadow on click */
+                transform: translateY(2px); /* Press effect */
             }
 
     </style>

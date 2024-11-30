@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using festivo.Models;
 
@@ -37,20 +35,37 @@ namespace festivo.Controllers
         }
 
         // GET: Tickets/Create
-        public ActionResult Create()
+        public ActionResult Create(int? eventId)
         {
-            ViewBag.EventID = new SelectList(db.Events, "EventID", "Title");
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Name");
+            if (eventId != null)
+            {
+                var eventDetails = db.Events.Find(eventId);
+                if (eventDetails != null)
+                {
+                    ViewBag.SelectedEvent = eventDetails;
+                }
+            }
             return View();
         }
 
         // POST: Tickets/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TicketID,EventID,UserID,BookingDate,Quantity")] Ticket ticket)
+        public ActionResult Create(Ticket ticket, string Email)
         {
+            // Find the user by email
+            var user = db.Users.FirstOrDefault(u => u.Email == Email);
+            if (user == null)
+            {
+                ModelState.AddModelError("Email", "No user found with this email.");
+                ViewBag.SelectedEvent = db.Events.Find(ticket.EventID);
+                return View(ticket);
+            }
+
+            // Create the ticket
+            ticket.UserID = user.UserID;
+
+            // Save the ticket
             if (ModelState.IsValid)
             {
                 db.Tickets.Add(ticket);
@@ -58,8 +73,7 @@ namespace festivo.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventID = new SelectList(db.Events, "EventID", "Title", ticket.EventID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Name", ticket.UserID);
+            ViewBag.SelectedEvent = db.Events.Find(ticket.EventID);
             return View(ticket);
         }
 
@@ -75,14 +89,10 @@ namespace festivo.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EventID = new SelectList(db.Events, "EventID", "Title", ticket.EventID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Name", ticket.UserID);
             return View(ticket);
         }
 
         // POST: Tickets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TicketID,EventID,UserID,BookingDate,Quantity")] Ticket ticket)
@@ -93,8 +103,6 @@ namespace festivo.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventID = new SelectList(db.Events, "EventID", "Title", ticket.EventID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "Name", ticket.UserID);
             return View(ticket);
         }
 
